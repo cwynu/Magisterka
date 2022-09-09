@@ -1,21 +1,21 @@
 import pandas as pd
 import plotly.express as px
 
-# Longest fixation chart
-df = pd.read_csv('Data\S1\Magisterka Recording13.tsv', delimiter="\t")
+# The range of fixation times chart
+df = pd.read_csv('Data/full2.tsv', delimiter="\t", low_memory=False)
 fig = px.line(df, x='Gaze event duration [ms]', y='Ungrouped', color='Ungrouped',
-              labels={'Ungrouped': 'AOI TAG'}, title='Longest fixation on AOI for Sceen 01 Record 13')
+              labels={'Ungrouped': 'AOI TAG'}, title='The range of fixation times chart')
 fig.show()
 
 
 # AOI hit duration at timeline chart
-df = pd.read_csv('Data\S1\Magisterka Recording13.tsv', delimiter="\t")
+#df = pd.read_csv('Data/full.tsv', delimiter="\t")
 fig = px.scatter(df, x='Recording timestamp [ms]', y='Gaze event duration [ms]', color='Ungrouped',
                 labels={'Ungrouped': 'AOI TAG'}, title='AOI hit duration chart for Sceen 01 Record 13')
 fig.show()
 
 # AOI hit percent
-df = pd.read_csv('Data\S1\Magisterka Recording13.tsv', delimiter="\t")
+#df = pd.read_csv('Data/full.tsv', delimiter="\t")
 
 Text = {'AoiDuration': 0, 'WholeDuration': 0, 'PercentUsage': 0 }
 NPC_corp = {'AoiDuration': 0, 'WholeDuration': 0, 'PercentUsage': 0 }
@@ -24,32 +24,32 @@ Player = {'AoiDuration': 0, 'WholeDuration': 0, 'PercentUsage': 0 }
 Fire = {'AoiDuration': 0, 'WholeDuration': 0, 'PercentUsage': 0 }
 Truck = {'AoiDuration': 0, 'WholeDuration': 0, 'PercentUsage': 0 }
 
-AoiTags = {'Text': Text, 'NPC_corp': NPC_corp, 'NPC_face': NPC_face, 'Player': Player, 'Fire': Fire, 'Truck': Truck}
+AoiTags = {'Text': Text, 'NPC_corp': NPC_corp, 'NPC_face': NPC_face, 'Player': Player, 'Fire': Fire, 'Truck': Truck}; low_memory=False
 
 for Text in AoiTags:
     AoiTags[Text]['WholeDuration'] = int((df['Gaze event duration [ms]']).sum())
 
-for i in range (0, 2400):
+for i in range (0, 54634):
     if (df['AOI hit [Desktop 2022.06.12 - 22.07.32.02 - Text]'][i]) == 1:
         AoiTags['Text']['AoiDuration'] += int(df['Gaze event duration [ms]'][[i]])
 
-for i in range(0, 2400):
+for i in range(0, 54634):
     if (df['AOI hit [Desktop 2022.06.12 - 22.07.32.02 - Player]'][i]) == 1:
         AoiTags['Player']['AoiDuration'] += int(df['Gaze event duration [ms]'][[i]])
 
-for i in range(0, 2400):
+for i in range(0, 54634):
     if (df['AOI hit [Desktop 2022.06.12 - 22.07.32.02 - Fire]'][i]) == 1:
         AoiTags['Fire']['AoiDuration'] += int(df['Gaze event duration [ms]'][[i]])
 
-for i in range(0, 2400):
+for i in range(0, 54634):
     if (df['AOI hit [Desktop 2022.06.12 - 22.07.32.02 - Truck]'][i]) == 1:
         AoiTags['Truck']['AoiDuration'] += int(df['Gaze event duration [ms]'][[i]])
 
-for i in range(0, 2400):
+for i in range(0, 54634):
     if (df['AOI hit [Desktop 2022.06.12 - 22.07.32.02 - NPC corp]'][i]) == 1:
         AoiTags['NPC_corp']['AoiDuration'] += int(df['Gaze event duration [ms]'][[i]])
 
-for i in range(0, 2400):
+for i in range(0, 54634):
     if (df['AOI hit [Desktop 2022.06.12 - 22.07.32.02 - NPC face]'][i]) == 1:
         AoiTags['NPC_face']['AoiDuration'] += int(df['Gaze event duration [ms]'][[i]])
 
